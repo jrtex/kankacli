@@ -7,6 +7,8 @@ from kankacli.commands import quests as quests_cmd
 from kankacli.commands import journals as journals_cmd
 from kankacli.commands import notes as notes_cmd
 from kankacli.commands import tags as tags_cmd
+from kankacli.commands import families as families_cmd
+from kankacli.commands import organisations as organisations_cmd
 
 app = typer.Typer(
     name="kankacli",
@@ -22,6 +24,8 @@ app.add_typer(quests_cmd.app, name="quests")
 app.add_typer(journals_cmd.app, name="journals")
 app.add_typer(notes_cmd.app, name="notes")
 app.add_typer(tags_cmd.app, name="tags")
+app.add_typer(families_cmd.app, name="families")
+app.add_typer(organisations_cmd.app, name="organisations")
 
 if __name__ == "__main__":
     app()
