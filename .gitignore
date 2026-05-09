@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Secrets / local config
+.env
+*.token
+
+# Dev tracking (local only)
+DEV_STATUS.md
+
+# IDEs
+.vscode/
+.idea/
+*.swp
