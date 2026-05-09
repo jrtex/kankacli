@@ -9,6 +9,9 @@ from kankacli.commands import notes as notes_cmd
 from kankacli.commands import tags as tags_cmd
 from kankacli.commands import families as families_cmd
 from kankacli.commands import organisations as organisations_cmd
+from kankacli.commands import events as events_cmd
+from kankacli.commands import creatures as creatures_cmd
+from kankacli.commands import races as races_cmd
 
 app = typer.Typer(
     name="kankacli",
@@ -26,6 +29,9 @@ app.add_typer(notes_cmd.app, name="notes")
 app.add_typer(tags_cmd.app, name="tags")
 app.add_typer(families_cmd.app, name="families")
 app.add_typer(organisations_cmd.app, name="organisations")
+app.add_typer(events_cmd.app, name="events")
+app.add_typer(creatures_cmd.app, name="creatures")
+app.add_typer(races_cmd.app, name="races")
 
 if __name__ == "__main__":
     app()
