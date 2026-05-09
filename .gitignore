@@ -15,6 +15,7 @@ venv/
 
 # Dev tracking (local only)
 DEV_STATUS.md
+.claude/
 
 # IDEs
 .vscode/
