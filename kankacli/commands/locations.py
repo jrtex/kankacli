@@ -7,9 +7,9 @@ from kankacli import output
 
 app = typer.Typer(help="Manage locations in your campaign.")
 
-LIST_COLUMNS = ["id", "name", "type", "parent_location_id", "is_private"]
+LIST_COLUMNS = ["id", "name", "type", "status", "parent_location_id", "is_private"]
 DETAIL_FIELDS = [
-    "id", "name", "type", "parent_location_id", "entry",
+    "id", "name", "type", "status", "parent_location_id", "entry",
     "is_private", "created_at", "updated_at",
 ]
 
@@ -74,6 +74,7 @@ def add_location(
     entry: Optional[str] = typer.Option(None, "--entry", help="Description (supports markdown)."),
     parent_location_id: Optional[int] = typer.Option(None, "--parent-id", help="ID of the parent location."),
     is_private: bool = typer.Option(False, "--private/--public", help="Make the location private."),
+    status_id: Optional[int] = typer.Option(None, "--status-id", help="Status ID — run `kankacli statuses list` to see options."),
     campaign: Optional[int] = typer.Option(None, "--campaign", "-c", help="Campaign ID (overrides default)."),
 ):
     """Create a new location."""
@@ -87,6 +88,8 @@ def add_location(
         data["entry"] = entry
     if parent_location_id is not None:
         data["parent_location_id"] = parent_location_id
+    if status_id is not None:
+        data["status_id"] = status_id
 
     try:
         with KankaClient(token) as client:
@@ -108,6 +111,7 @@ def update_location(
     entry: Optional[str] = typer.Option(None, "--entry", help="Description (supports markdown)."),
     parent_location_id: Optional[int] = typer.Option(None, "--parent-id", help="ID of the parent location."),
     is_private: Optional[bool] = typer.Option(None, "--private/--public", help="Make the location private."),
+    status_id: Optional[int] = typer.Option(None, "--status-id", help="Status ID — run `kankacli statuses list` to see options."),
     campaign: Optional[int] = typer.Option(None, "--campaign", "-c", help="Campaign ID (overrides default)."),
 ):
     """Update an existing location. Only supplied fields are changed."""
@@ -125,6 +129,8 @@ def update_location(
         data["parent_location_id"] = parent_location_id
     if is_private is not None:
         data["is_private"] = is_private
+    if status_id is not None:
+        data["status_id"] = status_id
 
     if not data:
         output.error("No fields provided. Pass at least one option to update.")

@@ -45,12 +45,18 @@ kankacli campaigns list [--format json]
 kankacli campaigns get <id> [--format json]
 ```
 
+### statuses
+```bash
+kankacli statuses list [--format json]   # shows id, key, is_custom
+```
+Use the `id` value from this output with `--status-id` on characters, locations, and quests.
+
 ### characters
 ```bash
 kankacli characters list [--format json]
 kankacli characters get <id> [--format json]
-kankacli characters add --name <name> [--title <t>] [--age <a>] [--sex <s>] [--pronouns <p>] [--type <t>] [--entry <md>] [--location-id <id>] [--dead|--alive] [--private|--public]
-kankacli characters update <id> [--name <n>] [--title <t>] [--age <a>] [--sex <s>] [--pronouns <p>] [--type <t>] [--entry <md>] [--location-id <id>] [--dead|--alive] [--private|--public]
+kankacli characters add --name <name> [--title <t>] [--age <a>] [--sex <s>] [--pronouns <p>] [--type <t>] [--entry <md>] [--location-id <id>] [--status-id <id>] [--dead|--alive] [--private|--public]
+kankacli characters update <id> [--name <n>] [--title <t>] [--age <a>] [--sex <s>] [--pronouns <p>] [--type <t>] [--entry <md>] [--location-id <id>] [--status-id <id>] [--dead|--alive] [--private|--public]
 kankacli characters delete <id> [--yes]
 ```
 
@@ -58,8 +64,8 @@ kankacli characters delete <id> [--yes]
 ```bash
 kankacli locations list [--format json]
 kankacli locations get <id> [--format json]
-kankacli locations add --name <name> [--type <t>] [--entry <md>] [--parent-id <id>] [--private|--public]
-kankacli locations update <id> [--name <n>] [--type <t>] [--entry <md>] [--parent-id <id>] [--private|--public]
+kankacli locations add --name <name> [--type <t>] [--entry <md>] [--parent-id <id>] [--status-id <id>] [--private|--public]
+kankacli locations update <id> [--name <n>] [--type <t>] [--entry <md>] [--parent-id <id>] [--status-id <id>] [--private|--public]
 kankacli locations delete <id> [--yes]
 ```
 
@@ -67,8 +73,8 @@ kankacli locations delete <id> [--yes]
 ```bash
 kankacli quests list [--format json]
 kankacli quests get <id> [--format json]
-kankacli quests add --name <name> [--type <t>] [--entry <md>] [--parent-id <id>] [--character-id <id>] [--completed|--active] [--private|--public]
-kankacli quests update <id> [--name <n>] [--type <t>] [--entry <md>] [--parent-id <id>] [--character-id <id>] [--completed|--active] [--private|--public]
+kankacli quests add --name <name> [--type <t>] [--entry <md>] [--parent-id <id>] [--character-id <id>] [--status-id <id>] [--completed|--active] [--private|--public]
+kankacli quests update <id> [--name <n>] [--type <t>] [--entry <md>] [--parent-id <id>] [--character-id <id>] [--status-id <id>] [--completed|--active] [--private|--public]
 kankacli quests delete <id> [--yes]
 ```
 

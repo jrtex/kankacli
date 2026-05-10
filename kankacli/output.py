@@ -10,12 +10,18 @@ def print_json(data: Any) -> None:
     console.print_json(json.dumps(data))
 
 
+def _display(val: Any) -> str:
+    if isinstance(val, dict):
+        return val.get("key") or val.get("name") or json.dumps(val)
+    return str(val) if val is not None else ""
+
+
 def print_table(rows: list[dict], columns: list[str]) -> None:
     table = Table(show_header=True, header_style="bold cyan")
     for col in columns:
         table.add_column(col.replace("_", " ").title())
     for row in rows:
-        table.add_row(*[str(row.get(col) or "") for col in columns])
+        table.add_row(*[_display(row.get(col)) for col in columns])
     console.print(table)
 
 
@@ -28,7 +34,7 @@ def print_record(record: dict, fields: list[str] | None = None) -> None:
         val = record.get(key)
         if val is None:
             continue
-        table.add_row(key.replace("_", " ").title(), str(val))
+        table.add_row(key.replace("_", " ").title(), _display(val))
     console.print(table)
 
 

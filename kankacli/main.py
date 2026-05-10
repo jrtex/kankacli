@@ -19,6 +19,7 @@ from kankacli.commands import calendars as calendars_cmd
 from kankacli.commands import timelines as timelines_cmd
 from kankacli.commands import posts as posts_cmd
 from kankacli.commands import relations as relations_cmd
+from kankacli.commands import statuses as statuses_cmd
 
 app = typer.Typer(
     name="kankacli",
@@ -46,6 +47,7 @@ app.add_typer(calendars_cmd.app, name="calendars")
 app.add_typer(timelines_cmd.app, name="timelines")
 app.add_typer(posts_cmd.app, name="posts")
 app.add_typer(relations_cmd.app, name="relations")
+app.add_typer(statuses_cmd.app, name="statuses")
 
 if __name__ == "__main__":
     app()

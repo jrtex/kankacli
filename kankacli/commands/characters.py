@@ -7,9 +7,9 @@ from kankacli import output
 
 app = typer.Typer(help="Manage characters in your campaign.")
 
-LIST_COLUMNS = ["id", "name", "title", "type", "is_dead", "is_private"]
+LIST_COLUMNS = ["id", "name", "title", "type", "status", "is_dead", "is_private"]
 DETAIL_FIELDS = [
-    "id", "name", "title", "age", "sex", "pronouns", "type",
+    "id", "name", "title", "age", "sex", "pronouns", "type", "status",
     "location_id", "is_dead", "is_private", "entry",
     "created_at", "updated_at",
 ]
@@ -80,6 +80,7 @@ def add_character(
     location_id: Optional[int] = typer.Option(None, "--location-id", help="ID of the character's location."),
     is_dead: bool = typer.Option(False, "--dead/--alive", help="Mark the character as dead or alive."),
     is_private: bool = typer.Option(False, "--private/--public", help="Make the character private."),
+    status_id: Optional[int] = typer.Option(None, "--status-id", help="Status ID — run `kankacli statuses list` to see options."),
     campaign: Optional[int] = typer.Option(None, "--campaign", "-c", help="Campaign ID (overrides default)."),
 ):
     """Create a new character."""
@@ -101,6 +102,8 @@ def add_character(
         data["entry"] = entry
     if location_id is not None:
         data["location_id"] = location_id
+    if status_id is not None:
+        data["status_id"] = status_id
 
     try:
         with KankaClient(token) as client:
@@ -127,6 +130,7 @@ def update_character(
     location_id: Optional[int] = typer.Option(None, "--location-id", help="ID of the character's location."),
     is_dead: Optional[bool] = typer.Option(None, "--dead/--alive", help="Mark the character as dead or alive."),
     is_private: Optional[bool] = typer.Option(None, "--private/--public", help="Make the character private."),
+    status_id: Optional[int] = typer.Option(None, "--status-id", help="Status ID — run `kankacli statuses list` to see options."),
     campaign: Optional[int] = typer.Option(None, "--campaign", "-c", help="Campaign ID (overrides default)."),
 ):
     """Update an existing character. Only supplied fields are changed."""
@@ -154,6 +158,8 @@ def update_character(
         data["is_dead"] = is_dead
     if is_private is not None:
         data["is_private"] = is_private
+    if status_id is not None:
+        data["status_id"] = status_id
 
     if not data:
         output.error("No fields provided. Pass at least one option to update.")

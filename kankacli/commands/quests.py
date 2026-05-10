@@ -7,9 +7,9 @@ from kankacli import output
 
 app = typer.Typer(help="Manage quests in your campaign.")
 
-LIST_COLUMNS = ["id", "name", "type", "is_completed", "is_private"]
+LIST_COLUMNS = ["id", "name", "type", "status", "is_completed", "is_private"]
 DETAIL_FIELDS = [
-    "id", "name", "type", "quest_id", "character_id",
+    "id", "name", "type", "status", "quest_id", "character_id",
     "is_completed", "is_private", "entry", "created_at", "updated_at",
 ]
 
@@ -76,6 +76,7 @@ def add_quest(
     character_id: Optional[int] = typer.Option(None, "--character-id", help="ID of the quest giver character."),
     is_completed: bool = typer.Option(False, "--completed/--active", help="Mark the quest as completed."),
     is_private: bool = typer.Option(False, "--private/--public", help="Make the quest private."),
+    status_id: Optional[int] = typer.Option(None, "--status-id", help="Status ID — run `kankacli statuses list` to see options."),
     campaign: Optional[int] = typer.Option(None, "--campaign", "-c", help="Campaign ID (overrides default)."),
 ):
     """Create a new quest."""
@@ -91,6 +92,8 @@ def add_quest(
         data["quest_id"] = quest_id
     if character_id is not None:
         data["character_id"] = character_id
+    if status_id is not None:
+        data["status_id"] = status_id
 
     try:
         with KankaClient(token) as client:
@@ -114,6 +117,7 @@ def update_quest(
     character_id: Optional[int] = typer.Option(None, "--character-id", help="ID of the quest giver character."),
     is_completed: Optional[bool] = typer.Option(None, "--completed/--active", help="Mark the quest as completed."),
     is_private: Optional[bool] = typer.Option(None, "--private/--public", help="Make the quest private."),
+    status_id: Optional[int] = typer.Option(None, "--status-id", help="Status ID — run `kankacli statuses list` to see options."),
     campaign: Optional[int] = typer.Option(None, "--campaign", "-c", help="Campaign ID (overrides default)."),
 ):
     """Update an existing quest. Only supplied fields are changed."""
@@ -135,6 +139,8 @@ def update_quest(
         data["is_completed"] = is_completed
     if is_private is not None:
         data["is_private"] = is_private
+    if status_id is not None:
+        data["status_id"] = status_id
 
     if not data:
         output.error("No fields provided. Pass at least one option to update.")
