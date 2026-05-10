@@ -15,6 +15,8 @@ from kankacli.commands import races as races_cmd
 from kankacli.commands import abilities as abilities_cmd
 from kankacli.commands import items as items_cmd
 from kankacli.commands import maps as maps_cmd
+from kankacli.commands import calendars as calendars_cmd
+from kankacli.commands import timelines as timelines_cmd
 
 app = typer.Typer(
     name="kankacli",
@@ -38,6 +40,8 @@ app.add_typer(races_cmd.app, name="races")
 app.add_typer(abilities_cmd.app, name="abilities")
 app.add_typer(items_cmd.app, name="items")
 app.add_typer(maps_cmd.app, name="maps")
+app.add_typer(calendars_cmd.app, name="calendars")
+app.add_typer(timelines_cmd.app, name="timelines")
 
 if __name__ == "__main__":
     app()
