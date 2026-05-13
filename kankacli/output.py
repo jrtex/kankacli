@@ -43,4 +43,4 @@ def error(msg: str) -> None:
 
 
 def success(msg: str) -> None:
-    console.print(f"[bold green]✓[/bold green] {msg}")
+    console.print(f"[bold green][OK][/bold green] {msg}")
