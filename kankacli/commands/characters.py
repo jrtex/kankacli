@@ -7,7 +7,7 @@ from kankacli import output
 
 app = typer.Typer(help="Manage characters in your campaign.")
 
-LIST_COLUMNS = ["id", "name", "title", "type", "status", "is_dead", "is_private"]
+LIST_COLUMNS = ["id", "name", "title", "type", "status", "race", "is_private"]
 DETAIL_FIELDS = [
     "id", "name", "title", "age", "sex", "pronouns", "type", "status",
     "location_id", "is_dead", "is_private", "entry",
@@ -42,6 +42,14 @@ def list_characters(
     if format == Format.json:
         output.print_json(characters)
     else:
+        try:
+            with KankaClient(token) as client:
+                races = list(client.paginate(client.campaign_url(cid, "races")))
+        except KankaError:
+            races = []
+        race_map = {r["id"]: r["name"] for r in races}
+        for char in characters:
+            char["race"] = ", ".join(race_map.get(rid, str(rid)) for rid in (char.get("races") or []))
         output.print_table(characters, LIST_COLUMNS)
 
 
