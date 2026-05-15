@@ -7,7 +7,7 @@ A command-line tool for interacting with [Kanka](https://kanka.io) worldbuilding
 Requires Python 3.11+ and [pipx](https://pipx.pypa.io/).
 
 ```bash
-pipx install git+https://github.com/your-username/kankacli.git
+pipx install git+https://github.com/jrtex/kankacli.git
 ```
 
 ## Setup
