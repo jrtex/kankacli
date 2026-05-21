@@ -1,5 +1,6 @@
 from typing import Any, Iterator
 import httpx
+import markdown as _md
 
 BASE_URL = "https://api.kanka.io/1.0"
 
@@ -35,17 +36,22 @@ class KankaClient:
         response.raise_for_status()
         return response.json()
 
+    def _preprocess(self, data: dict) -> dict:
+        if "entry" in data and data["entry"] is not None:
+            data["entry"] = _md.markdown(data["entry"], extensions=["nl2br", "tables"])
+        return data
+
     def get(self, path: str, params: dict | None = None) -> Any:
         return self._handle(self._http.get(path, params=params))
 
     def post(self, path: str, data: dict) -> Any:
-        return self._handle(self._http.post(path, json=data))
+        return self._handle(self._http.post(path, json=self._preprocess(data)))
 
     def put(self, path: str, data: dict) -> Any:
-        return self._handle(self._http.put(path, json=data))
+        return self._handle(self._http.put(path, json=self._preprocess(data)))
 
     def patch(self, path: str, data: dict) -> Any:
-        return self._handle(self._http.patch(path, json=data))
+        return self._handle(self._http.patch(path, json=self._preprocess(data)))
 
     def delete(self, path: str) -> None:
         self._handle(self._http.delete(path))
